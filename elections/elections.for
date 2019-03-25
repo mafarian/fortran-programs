@@ -26,6 +26,9 @@ c      sigma = 0.d0
       teta = 1.d2
 
 c     votes from each candidate, for each research, are filled
+c     X(ij) = x((i-1)*m + j)
+c     Yk(t) = y((t-1)*m + k)
+
       do i = 1,p
             write(*,*) 'Votes in research number', i
             read(*,*) (y(k), k=(i-1)*m+1,i*m)
