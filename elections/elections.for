@@ -81,7 +81,7 @@ c     Print the transference of votes's array solution (in percentage)
             do i = 1,m
                   prev = prev + x((i-1)*m + j)
             end do
-            write(*,*) 'soma coluna', j, prev
+            write(*,*) 'column sum', j, prev
       end do
 
 
