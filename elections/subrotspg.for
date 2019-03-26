@@ -1,4 +1,5 @@
-    c Subrotina do Método do Gradiente Espectral Projetado
+c     subroutine of Spectral Projected Gradient method
+
       subroutine spg(n,x,l,u,alfa,g,xn,gn,eps,maxit,maxav)
       implicit none
       integer n, m, it, av, maxit, maxav, i
@@ -7,75 +8,85 @@
       it = 0
       av = 1
       t = 1.d0
+      
       call fun(n, x, f)
       call grad(n, x, g)
-
-    C	Verifica se a função já está satisfatoriamente minimizada
-    10	if(dabs(f).le.2.d0) then
-        write(*,*) 'atingiu limite de precisão da função'
+      
+c     checks if the function is already enough minimized
+10    if(dabs(f).le.2.d0) then
+        write(*,*) 'reached the function accuracy limit'
         return
       end if
-    C	Verifica a quantidade de iterações rodadas
+      
+c    	checks the number of iterations
       if(it.ge.maxit) then
-        write(*,*) 'atingiu limite de iterações'
-        write(*,*) it
+        write(*,*) 'reached the iterations limit'
         return
       end if
-    C	Calcula a norma do gradiente projetado
+      
+c     computes the projected gradient modulus
       do i=1,n
         xn(i) = x(i) - g(i)
         xn(i) = dmax1(l(i), dmin1(xn(i),u(i)))
       end do
+      
       gnor = 0.0d0
+      
       do i=1,n
         gnor = dmax1(gnor, dabs(xn(i)-x(i)))
       end do
-    C 	Verifica se o gradiente está suficientemente pequeno
+      
+c     verifies if the gradient is small enough
       if(gnor.le.eps) then
-        write(*,*) 'atingiu limite de precisão do gradiente'
-        write(*,*) it
+        write(*,*) 'reached the gradient accuracy limit'
         return
       end if
-    C	Acha a projeção do ponto a ser calculado dentro da caixa
-    20	do i = 1,n
+   
+c     computes the projection of the point inside the "box"
+20    do i = 1,n
         xn(i) = x(i) - t*g(i)
         xn(i) = dmax1(l(i), dmin1(xn(i), u(i)))
       end do
-    C	Calcula p: produto interno entre o gradiente e d
-    C	onde d = distância entre o ponto atual e o projetado
+      
+      
+c    	determines p: intern product between gradient and d
+c    	where d = distance between the current and the projected point
       p = 0.d0
       do i = 1,n
         p = p + g(i)*(xn(i) - x(i))
       end do
 
-    C	Calcula o valor da função no novo ponto (projetado)
+c    	computes the obj fun value at the new point (projected one)
       call fun(n, xn, fn)
       av = av + 1
-    C	Verifica a quantidade de avaliações feitas na função
+
+c     verifies the number of function evaluations
       if(av.ge.maxav) then
-        write(*,*) 'atingiu limite de avaliações'
-        write(*,*) it
+        write(*,*) 'reached the evaluations limit'
         return
       end if
 
-    C	Verifica se a função no novo ponto (projetado) é melhor que no ponto atual
+c    	checks if the function value at the new point (projected) is better than the value at the current one
       if(fn.le.(f+alfa*t*p)) then
         call grad(n,xn,gn)
         f = fn
 
-    C 		Calcula o novo tamanho de passo t (passo secante)
+c     	computes the new step size t (secant step)
         num = 0.d0
         den = 0.d0
+        
         do i = 1, n
           num = num + (xn(i) - x(i))**2
           den = den + (xn(i) - x(i))*(gn(i) - g(i))
         end do
+        
         if(den.eq.0.d0) then
           t = 1.d0
         else
           t = num/den
         end if
-c    		Verifica se o valor calculado é muito grande ou negativo
+
+c    		verifies if the computed value is too larg or negative
         if(t.le.0.d0) t = 1.d0
         if(t.gt.1.d20) t = 1.d0
 
@@ -83,6 +94,7 @@ c    		uptade the current point
         do i = 1,n
           x(i) = xn(i)
         end do
+        
         do i = 1,n
           g(i) = gn(i)
         end do
@@ -90,7 +102,8 @@ c    		uptade the current point
         it = it + 1
         go to 10
       end if
-c    	if it does not satisfy the down condition, another step size will be tested
+
+c     if it does not satisfy the down condition, another step size will be tested
       t = t/2.d0
       go to 20
       end
