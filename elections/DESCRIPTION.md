@@ -8,7 +8,7 @@ into the data pattern. So, applying that matrix (transference of votes's array) 
 > The complete report is [here](https://www.overleaf.com/read/vdzhmrgpdcnv) and some crutial corrections is
 [here](https://www.overleaf.com/read/jhbmnnpjvfvs), both in **Portuguese**.
 
-## Importants variables ##
+## IMPORTANT VARIABLES ##
 
 * Objective function and variables are [here](https://www.overleaf.com/read/vdzhmrgpdcnv) on the second section (_Modelagem_). Where:
   - _Yi(t)_: the percentage of votes of the candidate _i_ in research _t_
