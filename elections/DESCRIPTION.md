@@ -8,5 +8,15 @@ into the data pattern. So, applying that matrix (transference of votes's array) 
 > The complete report is [here](https://www.overleaf.com/read/vdzhmrgpdcnv) and some crutial corrections is
 [here](https://www.overleaf.com/read/jhbmnnpjvfvs), both in **Portuguese**.
 
+## Importants variables ##
+
+* Objective function and variables are [here](https://www.overleaf.com/read/vdzhmrgpdcnv) on the second section (_Modelagem_). Where:
+  - _Yi(t)_: the percentage of votes of the candidate _i_ in research _t_
+  - _Xij_: the percentage of votes of the candidate _i_ trasnferred by candidate _j_
+  - _m_: total number of candidates, including null/blank and undecided votes
+  - _p_: total number of researches used as input data 
+  - _gama_: weight associated to the constraint, to ensure that it will be fulfilled
+  
+  
 --
 *Stark*.
