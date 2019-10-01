@@ -9,5 +9,4 @@ I worked in 3 optimization problems using Fortran 77:
 
 And a game called "Boredom Game".
 
---
-*Stark*.
+-- *Stark*.
